@@ -1,19 +1,16 @@
-const canvas = document.querySelector('canvas');
-canvas.width = canvas.clientWidth * window.devicePixelRatio;
-canvas.height = canvas.clientHeight * window.devicePixelRatio;
+import * as Graphics from "/shared/engine/graphics.js"
+import * as Shader from "/shared/engine/shader.js"
+import {Texture} from "/shared/engine/texture.js"
 
-const device = await (await navigator.gpu?.requestAdapter())?.requestDevice();
+Graphics.Init(document.querySelector('canvas'));
 
-const context = canvas.getContext('webgpu');
-context.configure({device, format: navigator.gpu.getPreferredCanvasFormat()});
-
-const pipeline = device.createRenderPipeline({
+const pipeline = Graphics.Device.createRenderPipeline({
     layout: 'auto',
     vertex: {
-        module: device.createShaderModule({code: (await fetch('shared/shaders/advent_vert.wgsl').then(r => r.text()))}),
+        module: await Shader.Load('shared/shaders/advent_vert.wgsl'),
     },
     fragment: {
-        module: device.createShaderModule({code: (await fetch('shared/shaders/advent_frag.wgsl').then(r => r.text()))}),
+        module: await Shader.Load('shared/shaders/advent_frag.wgsl'),
         targets: [
             {format: navigator.gpu.getPreferredCanvasFormat()},
         ],
@@ -21,12 +18,14 @@ const pipeline = device.createRenderPipeline({
     primitive: {topology: 'triangle-list'},
 });
 
+const tex = Texture.Load('shared/assets/fx_rain.btex', 3)
+
 function Draw() {
-    const cmd = device.createCommandEncoder();
+    const cmd = Graphics.Device.createCommandEncoder();
     const pass = cmd.beginRenderPass({
         colorAttachments: [
             {
-                view: context.getCurrentTexture().createView(),
+                view: Graphics.Context.getCurrentTexture().createView(),
                 clearValue: [0.125, 0.125, 0.125, 1],
                 loadOp: 'clear',
                 storeOp: 'store',
@@ -34,9 +33,9 @@ function Draw() {
         ],
     });
     pass.setPipeline(pipeline);
-    pass.draw(3);
+    pass.draw(6);
     pass.end();
-    device.queue.submit([cmd.finish()]);
+    Graphics.Device.queue.submit([cmd.finish()]);
     requestAnimationFrame(Draw);
 }
 requestAnimationFrame(Draw);
