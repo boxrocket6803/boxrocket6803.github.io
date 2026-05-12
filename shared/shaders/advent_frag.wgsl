@@ -52,12 +52,13 @@ fn main(@location(0) Texcoord: vec2f) -> @location(0) vec4f {
 	color += color * color * color * 2;
 	
 	color += color * color;
-	color *= 1.5;
+	color *= 1.2;
 	
 	//FADE
 	var fade = saturate(Texcoord.x * 1.5 * (Texcoord.y + 1));
 	fade = mix(fade, pow(fade, 3), mask.g);
 	fade *= mix(1 - Texcoord.x, 1, saturate(mask.g - 0.4));
+	fade = pow(saturate(fade * 2), 0.8);
 	color = mix(vec3(20, 19, 18) / 255.0, color, fade);
 	
 	return vec4f(color, 1);
