@@ -37,8 +37,6 @@ const bind = Graphics.Device.createBindGroup({
 	],
 });
 
-const tex = Texture.Load('shared/assets/fx_rain.btex')
-
 function Draw() {
     const cmd = Graphics.Device.createCommandEncoder();
     const pass = cmd.beginRenderPass({

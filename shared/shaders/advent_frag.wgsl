@@ -51,6 +51,9 @@ fn main(@location(0) Texcoord: vec2f) -> @location(0) vec4f {
 	color *= 1 + (Texcoord - wuv).g * 10 * mask.r * mask.r * mask.r;
 	color += color * color * color * 2;
 	
+	color += color * color;
+	color *= 1.5;
+	
 	//FADE
 	var fade = saturate(Texcoord.x * 1.5 * (Texcoord.y + 1));
 	fade = mix(fade, pow(fade, 3), mask.g);

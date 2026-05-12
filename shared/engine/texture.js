@@ -29,7 +29,7 @@ export class Texture {
 		t.Height = r.ReadUInt16();
 		t.Depth = r.ReadUInt16();
 		//PIXELS
-		var d = new ImageData(t.Width, t.Height);
+		var d = new Uint8ClampedArray(t.Width * t.Height * 4);
 		var w = 0;
 		var clen = Texture.GetChannelCount(t.Type);
 		var c = [];
@@ -42,7 +42,7 @@ export class Texture {
 					run = r.ReadByte() + 1;
 				}
 				for (var ch = 0; ch < 4; ch++)
-					d.data[w++] = ch < clen ? c[ch] : (ch < 4 ? 0 : 1);
+					d[w++] = ch < clen ? c[ch] : (ch < 4 ? 0 : 1);
 				run--;
 			}
 		}
@@ -51,7 +51,7 @@ export class Texture {
 			format: 'rgba8unorm',
 			usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
 		});
-		Graphics.Device.queue.copyExternalImageToTexture({source: d}, {texture: t.Data}, [t.Width, t.Height]);
+		Graphics.Device.queue.writeTexture({texture: t.Data}, d, {bytesPerRow: t.Width * 4}, {width: t.Width, height: t.Height});
 		return t;
 	}
 	
