@@ -1,6 +1,7 @@
 import * as Graphics from "/shared/engine/graphics.js"
 import * as Shader from "/shared/engine/shader.js"
 import {Texture} from "/shared/engine/texture.js"
+import * as Time from "/shared/time.js"
 
 Graphics.Init(document.querySelector('canvas'));
 
@@ -18,7 +19,25 @@ const pipeline = Graphics.Device.createRenderPipeline({
     primitive: {topology: 'triangle-list'},
 });
 
-const tex = Texture.Load('shared/assets/fx_rain.btex', 3)
+const UniformBuffer = Graphics.Device.createBuffer({
+	usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+	size: 4,
+});
+
+const bind = Graphics.Device.createBindGroup({
+	layout: pipeline.getBindGroupLayout(0),
+	entries: [
+		{binding: 0, resource: UniformBuffer},
+		{binding: 1, resource: Graphics.Device.createSampler({
+			magFilter: 'linear',
+			minFilter: 'linear',
+		})},
+		{binding: 2, resource: (await Texture.Load('directory/assets/menu_0_0.btex')).Bind()},
+		{binding: 3, resource: (await Texture.Load('directory/assets/menu_0_0_mask.btex')).Bind()},
+	],
+});
+
+const tex = Texture.Load('shared/assets/fx_rain.btex')
 
 function Draw() {
     const cmd = Graphics.Device.createCommandEncoder();
@@ -33,8 +52,10 @@ function Draw() {
         ],
     });
     pass.setPipeline(pipeline);
+	pass.setBindGroup(0, bind);
     pass.draw(6);
     pass.end();
+	Graphics.Device.queue.writeBuffer(UniformBuffer, 0, Time.Bytes(), 0, 4);
     Graphics.Device.queue.submit([cmd.finish()]);
     requestAnimationFrame(Draw);
 }

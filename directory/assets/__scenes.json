@@ -1,0 +1,28 @@
+{
+  "Entities": {},
+  "Views": {
+    "menu_0_0": {
+      "Entities": [],
+      "Combos": {
+        "": {
+          "Actions": [],
+          "Scenes": {}
+        }
+      }
+    }
+  },
+  "Startup": [
+    {
+      "ActionType": "SetAmbience",
+      "Target": "ext_amb_0",
+      "ViewTransition": "None",
+      "NewValue": null
+    },
+    {
+      "ActionType": "SetView",
+      "Target": "menu_0_0",
+      "ViewTransition": "Fade",
+      "NewValue": null
+    }
+  ]
+}
