@@ -29,11 +29,17 @@ const bind = Graphics.Device.createBindGroup({
 	entries: [
 		{binding: 0, resource: UniformBuffer},
 		{binding: 1, resource: Graphics.Device.createSampler({
-			magFilter: 'linear',
-			minFilter: 'linear',
+			addressModeU: "clamp-to-edge", addressModeV: "clamp-to-edge",
+			magFilter: 'linear', minFilter: 'linear',
 		})},
-		{binding: 2, resource: (await Texture.Load('directory/assets/menu_0_0.btex')).Bind()},
-		{binding: 3, resource: (await Texture.Load('directory/assets/menu_0_0_mask.btex')).Bind()},
+		{binding: 2, resource: Graphics.Device.createSampler({
+			addressModeU: "repeat", addressModeV: "repeat",
+			magFilter: 'linear', minFilter: 'linear',
+		})},
+		{binding: 3, resource: (await Texture.Load('directory/assets/menu_0_0.btex')).Bind()},
+		{binding: 4, resource: (await Texture.Load('directory/assets/menu_0_0_mask.btex')).Bind()},
+		{binding: 5, resource: (await Texture.Load('shared/assets/fx_rain.btex')).Bind()},
+		{binding: 6, resource: (await Texture.Load('shared/assets/fx_noise.btex')).Bind()},
 	],
 });
 
