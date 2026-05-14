@@ -9,3 +9,14 @@
 	font-family: "bahnschrift";
 	src: url("assets/fnt_bahnschrift.ttf");
 }
+
+body {
+	background-color: var(--c_darkgrey);
+	
+	margin: 0;
+	position: absolute;
+	width: 100%;
+	min-height: 100%;
+	
+	display: flex;
+}

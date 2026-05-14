@@ -1,4 +1,4 @@
-import * as Graphics from "/shared/engine/graphics.js"
+import {Graphics} from "/shared/engine/graphics.js"
 import {Reader} from "/shared/reader.js"
 
 export class Texture {
@@ -9,6 +9,7 @@ export class Texture {
 		'g32'
 	]
 	
+	static Cache = {}
 	static GetChannelCount(format) {
 		switch (format) {
 			case 'rgba8888':
@@ -19,7 +20,10 @@ export class Texture {
 		return 1;
 	}
 	
-	static async Load(file) { //TODO cache
+	static async Load(file) {
+		var cached = Texture.Cache[file];
+		if (cached !== undefined)
+			return cached;
 		var r = await Reader.From(file);
 		var t = new Texture();
 		//HEADER
@@ -52,7 +56,7 @@ export class Texture {
 			usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
 		});
 		Graphics.Device.queue.writeTexture({texture: t.Data}, d, {bytesPerRow: t.Width * 4}, {width: t.Width, height: t.Height});
-		return t;
+		return Texture.Cache[file] = t;;
 	}
 	
 	Bind() {return this.Data.createView();}

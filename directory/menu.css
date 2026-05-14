@@ -1,0 +1,33 @@
+body {
+	height: 100%;
+	overflow: clip;
+}
+
+div.Options {
+	margin: 48px;
+	align-self: flex-end;
+	
+	display: flex;
+	flex-direction: column;
+}
+
+div.Space {
+	height: 28px;
+}
+
+a {
+	margin: 20px 0 0 0;
+	
+	color: var(--c_tanwhite);
+	font-weight: 350;
+	letter-spacing: 1px;
+	text-decoration: none;
+}
+
+h1 {
+	margin: 48px 0 0 0;
+	
+	color: var(--c_tanwhite);
+	font-weight: lighter;
+	letter-spacing: 14px;
+}
