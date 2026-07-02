@@ -45,7 +45,8 @@ export class Buffer {
 			var value = values[p.Key];
 			if (value === undefined)
 				continue;
-			Graphics.Device.queue.writeBuffer(this.Buffer, offset, Buffer.Convert(p, value), 0, offset += p.Size);
+			Graphics.Device.queue.writeBuffer(this.Buffer, offset, Buffer.Convert(p, value), 0, p.Size);
+			offset += p.Size;
 		}
 	}
 	

@@ -8,8 +8,8 @@ const pos = array<vec4f, 6>(
 );
 
 struct VertexOutput {
-  @builtin(position) Position : vec4f,
-  @location(0) Texcoord : vec2f,
+	@builtin(position) Position : vec4f,
+	@location(0) Texcoord : vec2f,
 }
 
 @vertex

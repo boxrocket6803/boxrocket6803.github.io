@@ -8,8 +8,8 @@ import {TimeSince} from "/shared/time.js"
 
 await Graphics.Init(document.querySelector('canvas'));
 const Advent = await Program.Create({
-	vert: await Shader.Load('shared/shaders/advent_vert.wgsl'),
-	frag: await Shader.Load('shared/shaders/advent_frag.wgsl'),
+	vert: await Shader.Load('directory/assets/advent_vert.wgsl'),
+	frag: await Shader.Load('directory/assets/advent_frag.wgsl'),
 }, [
 	Buffer.Create("Control", [
 		{Key : "Time", Type : "Float32"},

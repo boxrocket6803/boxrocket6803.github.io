@@ -5,8 +5,15 @@ export class Graphics {
 		var device = await (await navigator.gpu?.requestAdapter())?.requestDevice();;
 		var context = canvas.getContext('webgpu');
 		context.configure({device, format: navigator.gpu.getPreferredCanvasFormat()});
+		Graphics.Canvas = canvas;
 		Graphics.Device = device;
 		Graphics.Context = context;
+	}
+	
+	static Resize() {
+		Graphics.Canvas.width = window.innerWidth;
+		Graphics.Canvas.height = window.innerHeight;
+		return {x : Graphics.Canvas.width, y : Graphics.Canvas.height}
 	}
 	
 	static Pass = {
@@ -17,14 +24,17 @@ export class Graphics {
 			if (!Graphics.Rendering)
 				Graphics.CommandList = Graphics.Device.createCommandEncoder();
 			Graphics.RenderPass = Graphics.CommandList.beginRenderPass({
-				colorAttachments: [
-					{view: target, clearValue: color, loadOp: 'clear', storeOp: 'store'},
-				],
+				colorAttachments: [{
+					view: target,
+					clearValue: color,
+					loadOp: 'clear',
+					storeOp: 'store'
+				}],
 			});
 			Graphics.Rendering = true;
 		},
 		Draw: function(count) {
-			Graphics.RenderPass.draw(6);
+			Graphics.RenderPass.draw(count);
 		},
 		Close: function() {
 			Graphics.RenderPass.end();
