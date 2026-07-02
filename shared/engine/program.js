@@ -28,6 +28,7 @@ export class Program {
 		//default primitive options
 		if (pipeline.primitive === undefined)
 			pipeline.primitive = {topology: 'triangle-list'};
+		pipeline.multisample = {count : 4};
 		
 		var buffers = {}
 		for (var i in bind) {

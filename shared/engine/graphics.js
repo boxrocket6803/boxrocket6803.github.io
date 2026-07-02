@@ -17,18 +17,29 @@ export class Graphics {
 	}
 	
 	static Pass = {
-		Open: function(color, target) {
+		Open: function(color) {
 			if (color === undefined) color = [0, 0, 0, 1];
-			if (target === undefined) target = Graphics.Context.getCurrentTexture().createView();
 			
 			if (!Graphics.Rendering)
 				Graphics.CommandList = Graphics.Device.createCommandEncoder();
+			var target = Graphics.Context.getCurrentTexture();
+			if (!Graphics.MsaaTexture || Graphics.MsaaTexture.width != target.width || Graphics.MsaaTexture != target.height) {
+				if (Graphics.MsaaTexture)
+					Graphics.MsaaTexture.destroy();
+				Graphics.MsaaTexture = Graphics.Device.createTexture({
+					usage : GPUTextureUsage.RENDER_ATTACHMENT,
+					format : target.format,
+					size : [target.width, target.height],
+					sampleCount : 4
+				});
+			}
 			Graphics.RenderPass = Graphics.CommandList.beginRenderPass({
 				colorAttachments: [{
-					view: target,
-					clearValue: color,
-					loadOp: 'clear',
-					storeOp: 'store'
+					view : Graphics.MsaaTexture.createView(),
+					resolveTarget: target.createView(),
+					clearValue : color,
+					loadOp : 'clear',
+					storeOp : 'store'
 				}],
 			});
 			Graphics.Rendering = true;

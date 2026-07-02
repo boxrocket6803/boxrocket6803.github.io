@@ -20,7 +20,7 @@ const Ocean = await Program.Create({
 const Time = new TimeSince();
 Graphics.Submit = function() {
 	var size = Graphics.Resize();
-	var grid = {X : Math.round(size.x * 0.2), Y : Math.round(size.y * 0.2)};
+	var grid = {X : Math.round(size.x / 4.0), Y : Math.round(size.y / 4.0)};
 	
 	Graphics.Pass.Open();
 	Ocean.Buffers.Dimensions.Write(grid);
