@@ -20,3 +20,19 @@ body {
 	
 	display: flex;
 }
+
+*.NoSelect {
+	-webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    user-select: none;
+}
+
+body:has(> p.Load) {
+	display: grid;
+	place-items: center;
+}
+p.Load {
+	color: var(--c_tanwhite);
+	font-size: 18px;
+	filter: blur(0.04rem);
+}

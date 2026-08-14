@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8">
-<link rel="stylesheet" href="shared/global.css">
-<link rel="stylesheet" href="directory/menu.css">
-<link rel="stylesheet" href="directory/vista.css">
-<script defer src="directory/vista.js" type="module"></script>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="shared/global.css">
+	<link rel="stylesheet" href="directory/menu.css">
+	<link rel="stylesheet" href="directory/vista.css">
+	<script defer src="directory/vista.js" type="module"></script>
+	<script>
+		var Time = 0;
+		var DBGlow = 0;
+		var DBCount = 0;
+		function DBInc() {
+			DBGlow = 0.6;
+			if (++DBCount < 3)
+				return;
+			location.href = "dashboard/redir.html";
+		}
+		function DBDec(d) {
+			d -= Time; Time += d;
+			DBGlow = Math.max(0, DBGlow - d / 1000);
+			if (DBGlow == 0) DBCount = 0;
+			requestAnimationFrame(DBDec);
+		}
+		requestAnimationFrame(DBDec);
+	</script>
+</head>
 <body>
 	<canvas width="608" height="392"></canvas>
 	<div class="Options">
@@ -15,6 +35,6 @@
 		<a href="works/portfolio.html">Portfolio</a>
 		<a href="https://github.com/boxrocket6803">Github</a>
 	
-		<h1>BOXROCKET</h1>
+		<h1 class="NoSelect" onclick="DBInc()">BOXROCKET</h1>
 	</div>
 </body>

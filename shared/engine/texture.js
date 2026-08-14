@@ -56,7 +56,7 @@ export class Texture {
 			usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
 		});
 		Graphics.Device.queue.writeTexture({texture: t.Data}, d, {bytesPerRow: t.Width * 4}, {width: t.Width, height: t.Height});
-		return Texture.Cache[file] = t;;
+		return Texture.Cache[file] = t;
 	}
 	
 	Bind() {return this.Data.createView();}

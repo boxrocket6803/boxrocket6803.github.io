@@ -1,5 +1,15 @@
-struct DimBuffer {X : f32, Y : f32};
-@group(0) @binding(0) var<uniform> Dimensions: DimBuffer;
+struct _camera {
+	View : mat4x4f,
+	Proj : mat4x4f,
+	InvView : mat4x4f,
+	InvProj : mat4x4f,
+	Position : vec3f,
+	Forward : vec3f,
+}
+@group(0) @binding(0) var<uniform> Camera: _camera;
+
+struct _dimensions {X : f32, Y : f32};
+@group(0) @binding(1) var<uniform> Dimensions: _dimensions;
 
 const pos = array<vec2f, 6>(
 	vec2f(0, 1), vec2f(0, 0), vec2f(1, 0),

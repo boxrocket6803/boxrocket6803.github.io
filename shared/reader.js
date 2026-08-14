@@ -20,11 +20,13 @@ export class Reader {
 	
 	ReadString() {
 		var len = this.Read7BitEncodedInt()
-		return String.fromCharCode(...ReadBytes(len));
+		return String.fromCharCode(...this.ReadBytes(len));
 	}
 	
 	ReadUInt32() {return this.ReadUInt(4);}
 	ReadUInt16() {return this.ReadUInt(2);}
+	ReadInt32() {return this.ReadInt(4);}
+	ReadInt16() {return this.ReadInt(2);}
 	
 	ReadHalf()   {return this.ReadFloat(2, 5, 10);}
 	ReadSingle() {return this.ReadFloat(4, 8, 23);}
@@ -34,7 +36,7 @@ export class Reader {
 		var out = 0
 		for (var i = 0; i < 4; i++) {
 			var b = this.ReadByte();
-			out += (b & 254) << shift * 8;
+			out += (b & 254) << i * 8;
 			if (b <= 254)
 				return b;
 		}
@@ -45,6 +47,22 @@ export class Reader {
 		return out;
 	}
 	
+	ReadInt(size) {
+		var out = 0;
+		var first = true;
+		while (size--) {
+			if (first) {
+				var b = this.ReadByte();
+				out += b & 0x7f;
+				if (b & 0x80)
+					value -= 0x80;
+				first = false;
+			} else {
+				out *= 256;
+				out += this.ReadByte();
+			}
+		}
+	}
 	ReadUInt(size) {
 		var out = 0;
 		for (var i = 0; i < size; i++)
