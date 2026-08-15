@@ -31,9 +31,9 @@ async function Query() {
 	if (cch == null)
 		Throw("missing pkce cookie");
 	var uat = await fetch("https://github.com/login/oauth/access_token", {
-		method: "POST";
+		method: "POST",
 		headers: {"Accept": "application/json", "Content-Type": "application/json"},
-		body: "{'client_id': 'Iv23lixC6zB7rRFIydwG','code': '"+oac+"', 'code_verifier': '"+cch+"'}";
+		body: "{'client_id': 'Iv23lixC6zB7rRFIydwG','code': '"+oac+"', 'code_verifier': '"+cch+"'}"
 	}).json();
 	console.log(uat);
 	Status.textContent = "There are no admin panels available to your account.";
