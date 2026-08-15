@@ -21,6 +21,7 @@ function DBDec(d) {
 requestAnimationFrame(DBDec);
 
 async function Submit() {
+	return;
 	var rq = "https://github.com/login/oauth/authorize";
 	rq += "?client_id=Iv23lixC6zB7rRFIydwG";
 	rq += "&code_challenge_method=S256";
