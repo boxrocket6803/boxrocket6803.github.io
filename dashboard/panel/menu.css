@@ -1,0 +1,98 @@
+body {
+	flex-direction: column;
+}
+
+div.Upper {
+	display: flex;
+	flex: 5 1 auto;
+	background-image: 
+		radial-gradient(ellipse at top, transparent 70%, black),
+		radial-gradient(ellipse at top right, transparent 70%, black),
+		radial-gradient(circle at 30% 100%, transparent 75%, rgba(0, 0, 0, 0.6) 80%, transparent 80.3%),
+		radial-gradient(circle at 30% 100%, transparent 68.7%, rgba(0, 0, 0, 0.1) 69%, transparent 69.3%),
+		url("assets/vista.bmp");
+	background-size: cover;
+}
+div.Upper>* {
+	margin: auto 0 0 0;
+}
+
+h1.Title {
+	margin-left: auto;
+	margin-right: 8.5%;
+	color: Orange;
+	font-style: italic;
+	font-size: 45px;
+	font-weight: 350;
+	letter-spacing: 22px;
+	filter: blur(0.01em);
+	transform: translateY(14px);
+}
+
+div.Lower {
+	display: flex;
+	flex: 1 1 auto;
+	background-image:
+		linear-gradient(to right, var(--c_darkgrey) 50%, transparent 55%),
+		radial-gradient(circle at 30% 0%, transparent 64.7%, rgba(0, 0, 0, 0.3) 65%, transparent 65.3%);
+}
+
+div.Options {
+	margin-left: 4%;
+	margin-top: 8px;
+}
+div.Options>* {
+	margin: 20px 0 0 0;
+	
+	color: var(--c_tanwhite);
+	font-size: 20px;
+	font-weight: 350;
+	letter-spacing: 1px;
+	text-decoration: none;
+}
+div.Options>a:hover::before {
+	content: "> ";
+	width: 14px;
+	margin-left: -14px;
+}
+div.Options>p {
+	-webkit-text-stroke: 2px black;
+	paint-order: stroke fill;
+	margin: 4px 0 0 2px;
+	font-size: 10px;
+	color: yellow;
+}
+div.Options>p.Error {
+	-webkit-text-stroke: 2px black;
+	paint-order: stroke fill;
+	margin: 4px 0 0 2px;
+	font-size: 16px;
+	color: red;
+}
+
+div.Mark {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+div.Mark>* {
+	display: inline-block;
+	writing-mode: vertical-rl;
+	margin: 0 0 18px 5px;
+	color: var(--c_tanwhite);
+	text-decoration: none;
+	letter-spacing: 2px;
+}
+div.Mark>p,div.Mark>a {
+	font-size: 12px;
+	filter: blur(0.02em);
+}
+div.Mark>h1 {
+	width: 31px;
+	margin-top: 3px;
+	margin-bottom: 20px;
+	outline: 2px solid;
+	font-weight: lighter;
+	letter-spacing: 4px;
+	filter: blur(0.027em);
+}

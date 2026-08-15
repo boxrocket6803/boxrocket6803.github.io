@@ -6,24 +6,7 @@
 	<link rel="stylesheet" href="directory/menu.css">
 	<link rel="stylesheet" href="directory/vista.css">
 	<script defer src="directory/vista.js" type="module"></script>
-	<script>
-		var Time = 0;
-		var DBGlow = 0;
-		var DBCount = 0;
-		function DBInc() {
-			DBGlow = 0.6;
-			if (++DBCount < 3)
-				return;
-			location.href = "dashboard/redir.html";
-		}
-		function DBDec(d) {
-			d -= Time; Time += d;
-			DBGlow = Math.max(0, DBGlow - d / 1000);
-			if (DBGlow == 0) DBCount = 0;
-			requestAnimationFrame(DBDec);
-		}
-		requestAnimationFrame(DBDec);
-	</script>
+	<script src="dashboard/redirect.js"></script>
 </head>
 <body>
 	<canvas width="608" height="392"></canvas>
